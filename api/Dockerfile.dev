@@ -1,0 +1,26 @@
+#---- base ----
+
+FROM node:16-slim AS base
+WORKDIR /usr/src/app
+RUN apt-get update -y && apt-get install -y python3 build-essential procps
+
+#---- build ----
+
+FROM base as build
+COPY . ./
+
+ARG TARGET_ENV
+
+RUN npm install
+
+#---- Release ----
+FROM base AS release
+
+ARG TARGET_ENV
+ENV ENV=$TARGET_ENV
+
+COPY --from=build /usr/src/app .
+
+EXPOSE 3000
+CMD ["npm", "run", "start:dev"]
+

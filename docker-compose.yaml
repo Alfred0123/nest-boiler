@@ -1,0 +1,40 @@
+version: "3"
+volumes:
+  api_node_modules:
+
+services:
+  db:
+    image: postgres:latest
+    container_name: nest_boiler_postgres
+    # restart: always
+    # platform: 'linux/amd64'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      # PGDATA: /data/postgres
+    volumes:
+      - ./docker/postgres:/data/postgres
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+      args:
+        TARGET_ENV: "local"
+    container_name: nest_boiler_api
+    # environment:
+    #   TARGET_ENV: "local"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - ./api:/usr/src/app
+      - api_node_modules:/usr/src/app/node_modules
+    command:
+      - "npm"
+      - "run"
+      - "start:dev"
