@@ -3,6 +3,7 @@ import * as yaml from 'js-yaml';
 import { join } from 'path';
 import { registerAs } from '@nestjs/config';
 import { CONFIG_TYPE } from '@/type/config/config.type';
+import { DefaultConfig } from '@/interface/config/config.interface';
 
 const ENV = process.env.ENV || 'local';
 const YAML_CONFIG_FILENAME = `${ENV}.config.yaml`;
