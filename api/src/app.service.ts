@@ -6,7 +6,7 @@ export class AppService {
   constructor(private configService: ConfigService) {}
 
   getHello() {
-    const env = this.configService.get<string>('ENV');
+    const env = this.configService.get<string>('default.env');
     return { message: 'pong', env };
   }
 }
