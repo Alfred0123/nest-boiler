@@ -1,4 +1,14 @@
-host: localhost
-port: 5432
-user: postgres
-password: password
+default:
+  migrationsRun: false
+  logging: false
+  synchronize: false
+  type: postgres
+  host: nest_boiler_postgres
+  port: 5432
+  username: postgres
+  password: password
+  database: common
+  autoLoadEntities: true
+  migrations: ['migration/*{.js}']
+  entities: ['infrastructure/**/*{.js}']
+# tenant:
