@@ -10,5 +10,5 @@ default:
   database: common
   autoLoadEntities: true
   migrations: ['migration/*{.js}']
-  entities: ['infrastructure/**/*{.js}']
+  entities: ['infrastructure/**/*.entity{.js}']
 # tenant:
