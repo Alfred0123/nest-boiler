@@ -3,7 +3,7 @@ default:
   logging: false
   synchronize: false
   type: postgres
-  host: nest_boiler_postgres
+  host: nest-boiler-postgres
   port: 5432
   username: postgres
   password: password
