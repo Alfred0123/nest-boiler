@@ -12,6 +12,25 @@ metadata:
         - ./api/values.yaml
 profiles:
   - name: api
+    build:
+      tagPolicy:
+        envTemplate:
+          template: latest
+        gitCommit:
+          ignoreChanges: false
+      artifacts:
+        - image: keke0123/nest-boiler-dev
+          context: "../../../api"
+          docker:
+            dockerfile: "Dockerfile.dev"
+            # cacheFrom:
+            #   - "keke0123/nest-boiler-dev:latest"
+            buildArgs:
+              TARGET_ENV: local
+          sync:
+            manual:
+              - src: "../../../api/dist/*"
+                dest: "/usr/src/app/src/dist"
     deploy:
       helm:
         releases:
