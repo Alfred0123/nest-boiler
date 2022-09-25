@@ -18,23 +18,25 @@ profiles:
   - name: api
     build:
       tagPolicy:
-        # envTemplate:
-        #   template: latest
+        #   envTemplate:
+        #     template: latest
         gitCommit:
           ignoreChanges: false
       artifacts:
         - image: keke0123/nest-boiler-dev
           context: "../../../api"
           docker:
-            dockerfile: "Dockerfile.dev"
-            cacheFrom:
-              - keke0123/nest-boiler-dev
-            buildArgs:
-              TARGET_ENV: local
+            dockerfile: "Dockerfile.skaffold"
+          #   cacheFrom:
+          #     - keke0123/nest-boiler-dev
+          #     # - keke0123/nest-boiler-dev:latest
+          #   buildArgs:
+          #     TARGET_ENV: local
           sync:
+            # auto: true
             manual:
-              - src: "../../../api/*"
-                dest: "/usr/src/app"
+              - src: "../../../api/src/**/*.ts"
+                dest: "/usr/src/app/src"
     deploy:
       helm:
         releases:
