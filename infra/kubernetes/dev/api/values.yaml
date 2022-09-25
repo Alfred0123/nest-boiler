@@ -1,4 +1,4 @@
-image: keke0123/nest-boiler-dev:0.0.1
+# image: keke0123/nest-boiler-dev
 
 minReplicas: 1
 maxReplicas: 1

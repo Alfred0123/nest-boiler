@@ -10,6 +10,10 @@ metadata:
       valuesFiles:
         - ./commonValues.yaml
         - ./api/values.yaml
+      artifactOverrides:
+        image: keke0123/nest-boiler-dev
+      imageStrategy:
+        helm: {}
 profiles:
   - name: api
     build:
@@ -23,14 +27,14 @@ profiles:
           context: "../../../api"
           docker:
             dockerfile: "Dockerfile.dev"
-            # cacheFrom:
-            #   - "keke0123/nest-boiler-dev:latest"
+            cacheFrom:
+              - keke0123/nest-boiler-dev
             buildArgs:
               TARGET_ENV: local
           sync:
             manual:
-              - src: "../../../api/dist/*"
-                dest: "/usr/src/app/src/dist"
+              - src: "../../../api/*"
+                dest: "/usr/src/app"
     deploy:
       helm:
         releases:
