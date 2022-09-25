@@ -13,7 +13,8 @@ export const defaultConfig = registerAs(CONFIG_TYPE.DEFAULT, () => {
   // TODO. default 값 입력 sample 추가
   return yaml.load(
     readFileSync(
-      join(__dirname, `${CONFIG_TYPE.DEFAULT}/${YAML_CONFIG_FILENAME}`),
+      join(`dist/config/${CONFIG_TYPE.DEFAULT}/${YAML_CONFIG_FILENAME}`),
+      // join(__dirname, `${CONFIG_TYPE.DEFAULT}/${YAML_CONFIG_FILENAME}`),
       'utf8',
     ),
   ) as Record<string, any>;
@@ -22,7 +23,8 @@ export const defaultConfig = registerAs(CONFIG_TYPE.DEFAULT, () => {
 export const databaseConfig = registerAs(CONFIG_TYPE.DATABASE, () => {
   return yaml.load(
     readFileSync(
-      join(__dirname, `${CONFIG_TYPE.DATABASE}/${YAML_CONFIG_FILENAME}`),
+      join(`dist/config/${CONFIG_TYPE.DATABASE}/${YAML_CONFIG_FILENAME}`),
+      // join(__dirname, `${CONFIG_TYPE.DATABASE}/${YAML_CONFIG_FILENAME}`),
       'utf8',
     ),
   ) as Record<string, any>;
