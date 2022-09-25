@@ -35,8 +35,9 @@ profiles:
           sync:
             # auto: true
             manual:
-              - src: "../../../api/src/**/*.ts"
-                dest: "/usr/src/app/src"
+              - src: "src/**/*.ts"
+                dest: src
+                strip: "src/"
     deploy:
       helm:
         releases:
