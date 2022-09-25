@@ -10,8 +10,33 @@ metadata:
       valuesFiles:
         - ./commonValues.yaml
         - ./api/values.yaml
+      artifactOverrides:
+        image: keke0123/nest-boiler-dev
+      imageStrategy:
+        helm: {}
 profiles:
   - name: api
+    build:
+      tagPolicy:
+        #   envTemplate:
+        #     template: latest
+        gitCommit:
+          ignoreChanges: false
+      artifacts:
+        - image: keke0123/nest-boiler-dev
+          context: "../../../api"
+          docker:
+            dockerfile: "Dockerfile.skaffold"
+          #   cacheFrom:
+          #     - keke0123/nest-boiler-dev
+          #     # - keke0123/nest-boiler-dev:latest
+          #   buildArgs:
+          #     TARGET_ENV: local
+          sync:
+            # auto: true
+            manual:
+              - src: "../../../api/src/**/*.ts"
+                dest: "/usr/src/app/src"
     deploy:
       helm:
         releases:
