@@ -14,8 +14,8 @@ profiles:
   - name: api
     build:
       tagPolicy:
-        envTemplate:
-          template: latest
+        # envTemplate:
+        #   template: latest
         gitCommit:
           ignoreChanges: false
       artifacts:
