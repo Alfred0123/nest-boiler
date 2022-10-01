@@ -14,6 +14,18 @@ metadata:
         image: keke0123/nest-boiler-dev
       imageStrategy:
         helm: {}
+    - &neo4j
+      name: neo4j
+      remoteChart: neo4j/neo4j-standalone
+      valuesFiles:
+        - ./neo4j-standalone/values.yaml
+      version: 4.4.11
+      upgradeOnChange: true
+    - &storage
+      name: storage
+      chartPath: ../charts/storage
+      valuesFiles:
+        - ./commonValues.yaml
 profiles:
   - name: api
     build:
@@ -42,3 +54,13 @@ profiles:
       helm:
         releases:
           - *api
+  - name: neo4j
+    deploy:
+      helm:
+        releases:
+          - *neo4j
+  - name: storage
+    deploy:
+      helm:
+        releases:
+          - *storage
