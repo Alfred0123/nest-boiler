@@ -14,6 +14,11 @@ metadata:
         image: keke0123/nest-boiler-dev
       imageStrategy:
         helm: {}
+    - &postgres
+      name: postgres
+      chartPath: ../charts/postgres
+      valuesFiles:
+        - ./commonValues.yaml
     - &neo4j
       name: neo4j
       remoteChart: neo4j/neo4j-standalone
@@ -53,6 +58,11 @@ profiles:
       helm:
         releases:
           - *api
+  - name: postgres
+    deploy:
+      helm:
+        releases:
+          - *postgres
   - name: neo4j
     deploy:
       helm:
