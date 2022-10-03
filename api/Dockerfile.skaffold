@@ -1,3 +1,0 @@
-FROM keke0123/nest-boiler-dev:latest
-
-COPY ./src ./src

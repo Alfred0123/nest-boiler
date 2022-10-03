@@ -38,14 +38,13 @@ profiles:
         - image: keke0123/nest-boiler-dev
           context: "../../../api"
           docker:
-            dockerfile: "Dockerfile.skaffold"
+            dockerfile: "Dockerfile.dev"
           #   cacheFrom:
           #     - keke0123/nest-boiler-dev
           #     # - keke0123/nest-boiler-dev:latest
           #   buildArgs:
           #     TARGET_ENV: local
           sync:
-            # auto: true
             manual:
               - src: "src/**/*.ts"
                 dest: src
