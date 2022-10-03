@@ -129,13 +129,13 @@ volumes:
       name: "data"
 
 #add additional volumes and their respective mounts
-#additionalVolumes:
-#  - name: neo4j1-conf
-#    emptyDir: {}
+additionalVolumes:
+  - name: plugins
+    emptyDir: {}
 #
-#additionalVolumeMounts:
-#  - mountPath: "/config/neo4j1.conf"
-#    name: neo4j1-conf
+additionalVolumeMounts:
+  - mountPath: "/var/lib/neo4j/plugins"
+    name: plugins
 
 #nodeSelector labels
 #please ensure the respective labels are present on one of the cluster nodes or else helm charts will throw an error
@@ -220,9 +220,10 @@ config:
   #dbms.memory.heap.initial_size: "317m"
   #dbms.memory.heap.max_size: "317m"
 
-#apoc_config:
-#  apoc.trigger.enabled: "true"
-#  apoc.jdbc.apoctest.url: "jdbc:foo:bar"
+  dbms.security.procedures.unrestricted: algo.*,apoc.*
+apoc_config:
+  apoc.trigger.enabled: "true"
+  apoc.import.file.enabled: "true"
 
 # securityContext defines privilege and access control settings for a Pod or Container. Making sure that we dont run Neo4j as root user.
 securityContext:
@@ -373,7 +374,26 @@ podSpec:
   terminationGracePeriodSeconds: 3600
 
   # initContainers for the Neo4j pod
-  initContainers: []
+  initContainers:
+    - name: init-plugins
+      image: "curlimages/curl:latest"
+      imagePullPolicy: "IfNotPresent"
+      volumeMounts:
+        - name: plugins
+          mountPath: /plugins
+      securityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+      command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          curl -o apoc.jar -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/4.4.0.1/apoc-4.4.0.1-all.jar -O
+          cp apoc.jar /plugins/
+          chown 7474:7474 /plugins/apoc.jar
+          curl -o jdbc.jar -L https://jdbc.postgresql.org/download/postgresql-42.5.0.jar -O
+          cp jdbc.jar /plugins/
+          chown 7474:7474 /plugins/jdbc.jar
 
   # additional runtime containers for the Neo4j pod
   containers: []
