@@ -9,7 +9,7 @@ export default new DataSource({
   username: 'postgres',
   password: 'password',
   database: 'common',
-  migrations: ['src/migration/*.ts'],
+  migrations: ['migration/*.ts'],
   entities: ['src/infrastructure/**/*.entity.ts'],
   // subscribers: ['infrastructure/database/subscribers/**/*.ts'],
   // migrationsRun: false,
