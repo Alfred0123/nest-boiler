@@ -1,11 +1,17 @@
-# getting start
+## getting start
 
-# layer
+## layer
 
-# infra
+## infra
 
-# mini-kube dev
+## mini-kube dev
 
 ```shell
   skaffold dev -p api --no-prune
 ```
+
+## migration
+
+### example
+
+npm run typeorm:generate -- migration/createUser
