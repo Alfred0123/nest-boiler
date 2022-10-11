@@ -9,6 +9,6 @@ default:
   password: password
   database: common
   autoLoadEntities: true
-  migrations: ['migration/*{.js}']
-  entities: ['infrastructure/**/*.entity{.js}']
+  migrations: ['migration/*.ts']
+  entities: ['dist/src/infrastructure/**/*.entity.js']
 # tenant:
