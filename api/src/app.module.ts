@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { defaultConfig, databaseConfig } from '@/config/config.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from '@/interface/config/config.interface';
+import { AdapterModule } from '@/adapter/adapter.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +34,7 @@ import { DatabaseConfig } from '@/interface/config/config.interface';
         };
       },
     }),
+    AdapterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
