@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta16
+apiVersion: skaffold/v2beta29
 kind: Config
 metadata:
   name: skaffold
@@ -31,6 +31,16 @@ metadata:
       chartPath: ../charts/storage
       valuesFiles:
         - ./commonValues.yaml
+    - &firebase
+      name: firebase
+      chartPath: ../charts/firebase
+      valuesFiles:
+        - ./commonValues.yaml
+        - ./firebase/values.yaml
+      artifactOverrides:
+        image: keke0123/firebase
+      imageStrategy:
+        helm: {}
 profiles:
   - name: api
     build:
@@ -73,3 +83,21 @@ profiles:
       helm:
         releases:
           - *storage
+  - name: firebase
+    build:
+      tagPolicy:
+        # envTemplate:
+        #   template: latest
+        gitCommit:
+          ignoreChanges: false
+      artifacts:
+        - image: keke0123/firebase
+          context: "./firebase"
+          docker:
+            dockerfile: "Dockerfile"
+            # buildArgs:
+            #   NODE_ENV: development
+    deploy:
+      helm:
+        releases:
+          - *firebase

@@ -16,10 +16,11 @@ spec:
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: postgres
 spec:
+  serviceName: postgres # statefulset 사용시에 필요
   selector:
     matchLabels:
       app: postgres
@@ -54,6 +55,14 @@ spec:
           volumeMounts:
             - name: pg-init
               mountPath: /docker-entrypoint-initdb.d
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
 # ---
 # apiVersion: autoscaling/v2beta2
 # kind: HorizontalPodAutoscaler
