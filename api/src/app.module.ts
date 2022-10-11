@@ -17,7 +17,6 @@ import { AdapterModule } from '@/adapter/adapter.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         const config = configService.get<DatabaseConfig>('database').default;
-        config.type;
         return {
           migrationsRun: config.migrationsRun,
           logging: config.logging,
@@ -29,7 +28,7 @@ import { AdapterModule } from '@/adapter/adapter.module';
           password: config.password,
           database: config.database,
           autoLoadEntities: config.autoLoadEntities,
-          migrations: config.migrations,
+          // migrations: config.migrations,
           entities: config.entities,
         };
       },

@@ -3,7 +3,7 @@ default:
   logging: false
   synchronize: false
   type: postgres
-  host: nest-boiler-postgres
+  host: localhost
   port: 5432
   username: postgres
   password: password
@@ -11,4 +11,5 @@ default:
   autoLoadEntities: true
   migrations: ['migration/*.ts']
   entities: ['dist/src/infrastructure/**/*.entity.js']
-# tenant:
+## tenant:
+
